@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Basics - Personal Task Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: #4ecdc4;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #4ecdc4;
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .task-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .task-item:hover {
+            background: #e9ecef;
+        }
+
+        .task-completed {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 JavaScript Basics Learning Project</h1>
+            <p>Personal Task Manager - Learn by Doing!</p>
+        </div>
+
+        <div class="content">
+            <!-- 1. Variables and Data Types -->
+            <div class="section">
+                <h2>1. Variables & Data Types 📝</h2>
+                <div class="input-group">
+                    <label>Your Name (String):</label>
+                    <input type="text" id="userName" placeholder="Enter your name">
+                </div>
+                <div class="input-group">
+                    <label>Your Age (Number):</label>
+                    <input type="number" id="userAge" placeholder="Enter your age">
+                </div>
+                <div class="input-group">
+                    <label>Are you a student? (Boolean):</label>
+                    <select id="isStudent">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                <button onclick="demonstrateVariables()">Show Variables Demo</button>
+                <div id="variablesOutput" class="output"></div>
+            </div>
+
+            <!-- 2. Functions -->
+            <div class="section">
+                <h2>2. Functions 🔧</h2>
+                <div class="input-group">
+                    <label>Number 1:</label>
+                    <input type="number" id="num1" placeholder="Enter first number">
+                </div>
+                <div class="input-group">
+                    <label>Number 2:</label>
+                    <input type="number" id="num2" placeholder="Enter second number">
+                </div>
+                <div class="demo-buttons">
+                    <button onclick="demonstrateFunctions('add')">Add</button>
+                    <button onclick="demonstrateFunctions('subtract')">Subtract</button>
+                    <button onclick="demonstrateFunctions('multiply')">Multiply</button>
+                    <button onclick="demonstrateFunctions('divide')">Divide</button>
+                </div>
+                <div id="functionsOutput" class="output"></div>
+            </div>
+
+            <!-- 3. Arrays -->
+            <div class="section">
+                <h2>3. Arrays 📚</h2>
+                <div class="input-group">
+                    <label>Add a hobby:</label>
+                    <input type="text" id="hobbyInput" placeholder="Enter a hobby">
+                    <button onclick="addHobby()">Add Hobby</button>
+                </div>
+                <div class="demo-buttons">
+                    <button onclick="demonstrateArrays('show')">Show All Hobbies</button>
+                    <button onclick="demonstrateArrays('count')">Count Hobbies</button>
+                    <button onclick="demonstrateArrays('remove')">Remove Last</button>
+                    <button onclick="demonstrateArrays('clear')">Clear All</button>
+                </div>
+                <div id="arraysOutput" class="output"></div>
+            </div>
+
+            <!-- 4. Objects -->
+            <div class="section">
+                <h2>4. Objects 🏠</h2>
+                <div class="input-group">
+                    <label>Task Title:</label>
+                    <input type="text" id="taskTitle" placeholder="Enter task title">
+                </div>
+                <div class="input-group">
+                    <label>Priority:</label>
+                    <select id="taskPriority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <button onclick="createTask()">Create Task Object</button>
+                <div id="objectsOutput" class="output"></div>
+            </div>
+
+            <!-- 5. Conditional Statements -->
+            <div class="section">
+                <h2>5. Conditional Statements 🤔</h2>
+                <div class="input-group">
+                    <label>Enter a number (1-100):</label>
+                    <input type="number" id="scoreInput" min="1" max="100" placeholder="Enter score">
+                </div>
+                <button onclick="demonstrateConditionals()">Get Grade</button>
+                <div id="conditionalsOutput" class="output"></div>
+            </div>
+
+            <!-- 6. Loops -->
+            <div class="section">
+                <h2>6. Loops 🔄</h2>
+                <div class="input-group">
+                    <label>Count to:</label>
+                    <input type="number" id="loopCount" placeholder="Enter a number" min="1" max="20">
+                </div>
+                <div class="demo-buttons">
+                    <button onclick="demonstrateLoops('for')">For Loop</button>
+                    <button onclick="demonstrateLoops('while')">While Loop</button>
+                    <button onclick="demonstrateLoops('foreach')">ForEach Loop</button>
+                </div>
+                <div id="loopsOutput" class="output"></div>
+            </div>
+
+            <!-- 7. DOM Manipulation -->
+            <div class="section">
+                <h2>7. DOM Manipulation 🎨</h2>
+                <div class="input-group">
+                    <label>Task Description:</label>
+                    <input type="text" id="newTask" placeholder="Enter a new task">
+                    <button onclick="addTask()">Add Task</button>
+                </div>
+                <div id="taskList"></div>
+                <div class="demo-buttons">
+                    <button onclick="clearAllTasks()">Clear All Tasks</button>
+                    <button onclick="markAllComplete()">Mark All Complete</button>
+                </div>
+            </div>
+
+            <!-- 8. Events -->
+            <div class="section">
+                <h2>8. Event Handling 👆</h2>
+                <button id="clickCounter" onclick="incrementCounter()">Click Me! (0 clicks)</button>
+                <button onmouseover="showMessage()" onmouseout="hideMessage()">Hover Me!</button>
+                <div id="hoverMessage" style="display: none; color: #4ecdc4; margin-top: 10px;">
+                    👋 Hello! You're hovering over me!
+                </div>
+            </div>
+
+            <!-- Statistics Dashboard -->
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalTasks">0</div>
+                    <div>Total Tasks</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="completedTasks">0</div>
+                    <div>Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="clickCount">0</div>
+                    <div>Button Clicks</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalHobbies">0</div>
+                    <div>Hobbies Added</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JAVASCRIPT BASICS DEMONSTRATION
+        // This project demonstrates all fundamental JavaScript concepts
+
+        // ===========================================
+        // 1. VARIABLES AND DATA TYPES
+        // ===========================================
+        
+        // Different types of variables
+        let userName = ""; // String variable
+        let userAge = 0; // Number variable
+        let isStudent = false; // Boolean variable
+        const PI = 3.14159; // Constant variable
+        let hobbies = []; // Array variable
+        let tasks = []; // Array to store task objects
+        let clickCounter = 0; // Counter variable
+
+        // Function to demonstrate variables and data types
+        function demonstrateVariables() {
+            // Get values from input fields (DOM manipulation)
+            userName = document.getElementById('userName').value;
+            userAge = parseInt(document.getElementById('userAge').value);
+            isStudent = document.getElementById('isStudent').value === 'true';
+            
+            // Demonstrate different data types
+            let output = `VARIABLES AND DATA TYPES DEMO:\n\n`;
+            output += `1. STRING: userName = "${userName}" (type: ${typeof userName})\n`;
+            output += `2. NUMBER: userAge = ${userAge} (type: ${typeof userAge})\n`;
+            output += `3. BOOLEAN: isStudent = ${isStudent} (type: ${typeof isStudent})\n`;
+            output += `4. CONSTANT: PI = ${PI} (type: ${typeof PI})\n`;
+            output += `5. UNDEFINED: let undefinedVar; (type: ${typeof undefined})\n`;
+            output += `6. NULL: let nullVar = null; (type: ${typeof null})\n\n`;
+            
+            // Template literals demonstration
+            output += `TEMPLATE LITERALS DEMO:\n`;
+            output += `Hello ${userName}! You are ${userAge} years old.\n`;
+            output += `Student status: ${isStudent ? 'Yes' : 'No'}\n`;
+            
+            document.getElementById('variablesOutput').textContent = output;
+        }
+
+        // ===========================================
+        // 2. FUNCTIONS
+        // ===========================================
+        
+        // Regular function declaration
+        function add(a, b) {
+            return a + b;
+        }
+        
+        // Function expression
+        const subtract = function(a, b) {
+            return a - b;
+        };
+        
+        // Arrow function
+        const multiply = (a, b) => a * b;
+        
+        // Function with default parameters
+        const divide = (a, b = 1) => {
+            if (b === 0) {
+                return "Cannot divide by zero!";
+            }
+            return a / b;
+        };
+        
+        function demonstrateFunctions(operation) {
+            const num1 = parseFloat(document.getElementById('num1').value) || 0;
+            const num2 = parseFloat(document.getElementById('num2').value) || 0;
+            
+            let result;
+            let functionType;
+            
+            switch(operation) {
+                case 'add':
+                    result = add(num1, num2);
+                    functionType = "Regular Function Declaration";
+                    break;
+                case 'subtract':
+                    result = subtract(num1, num2);
+                    functionType = "Function Expression";
+                    break;
+                case 'multiply':
+                    result = multiply(num1, num2);
+                    functionType = "Arrow Function";
+                    break;
+                case 'divide':
+                    result = divide(num1, num2);
+                    functionType = "Function with Default Parameters";
+                    break;
+            }
+            
+            let output = `FUNCTIONS DEMO:\n\n`;
+            output += `Operation: ${operation}(${num1}, ${num2})\n`;
+            output += `Result: ${result}\n`;
+            output += `Function Type: ${functionType}\n\n`;
+            output += `FUNCTION TYPES EXPLAINED:\n`;
+            output += `• Regular Function: function name() {}\n`;
+            output += `• Function Expression: const name = function() {}\n`;
+            output += `• Arrow Function: const name = () => {}\n`;
+            output += `• Default Parameters: function(a, b = defaultValue)\n`;
+            
+            document.getElementById('functionsOutput').textContent = output;
+        }
+
+        // ===========================================
+        // 3. ARRAYS
+        // ===========================================
+        
+        function addHobby() {
+            const hobby = document.getElementById('hobbyInput').value.trim();
+            if (hobby) {
+                hobbies.push(hobby); // Add to end of array
+                document.getElementById('hobbyInput').value = ''; // Clear input
+                updateStats();
+                
+                // Show confirmation
+                demonstrateArrays('show');
+            }
+        }
+        
+        function demonstrateArrays(action) {
+            let output = `ARRAYS DEMO:\n\n`;
+            
+            switch(action) {
+                case 'show':
+                    output += `Current hobbies array: [${hobbies.join(', ')}]\n`;
+                    output += `Array length: ${hobbies.length}\n\n`;
+                    
+                    // Demonstrate array methods
+                    if (hobbies.length > 0) {
+                        output += `ARRAY METHODS:\n`;
+                        output += `• First hobby: ${hobbies[0]} (index 0)\n`;
+                        output += `• Last hobby: ${hobbies[hobbies.length - 1]}\n`;
+                        output += `• All hobbies: ${hobbies.join(', ')}\n`;
+                    }
+                    break;
+                    
+                case 'count':
+                    output += `Total hobbies: ${hobbies.length}\n`;
+                    output += `Array is ${hobbies.length === 0 ? 'empty' : 'not empty'}\n`;
+                    break;
+                    
+                case 'remove':
+                    if (hobbies.length > 0) {
+                        const removed = hobbies.pop(); // Remove last element
+                        output += `Removed hobby: "${removed}"\n`;
+                        output += `Remaining hobbies: [${hobbies.join(', ')}]\n`;
+                        updateStats();
+                    } else {
+                        output += `No hobbies to remove!\n`;
+                    }
+                    break;
+                    
+                case 'clear':
+                    hobbies = []; // Clear array
+                    output += `All hobbies cleared!\n`;
+                    output += `Array is now empty: ${hobbies.length === 0}\n`;
+                    updateStats();
+                    break;
+            }
+            
+            document.getElementById('arraysOutput').textContent = output;
+        }
+
+        // ===========================================
+        // 4. OBJECTS
+        // ===========================================
+        
+        function createTask() {
+            const title = document.getElementById('taskTitle').value.trim();
+            const priority = document.getElementById('taskPriority').value;
+            
+            if (title) {
+                // Create an object
+                const taskObject = {
+                    id: Date.now(), // Simple ID generation
+                    title: title,
+                    priority: priority,
+                    completed: false,
+                    createdAt: new Date().toLocaleString(),
+                    
+                    // Object method
+                    getInfo: function() {
+                        return `${this.title} (${this.priority} priority)`;
+                    },
+                    
+                    // Another method
+                    toggleComplete: function() {
+                        this.completed = !this.completed;
+                    }
+                };
+                
+                // Add to tasks array
+                tasks.push(taskObject);
+                
+                let output = `OBJECTS DEMO:\n\n`;
+                output += `Created Task Object:\n`;
+                output += `{\n`;
+                output += `  id: ${taskObject.id}\n`;
+                output += `  title: "${taskObject.title}"\n`;
+                output += `  priority: "${taskObject.priority}"\n`;
+                output += `  completed: ${taskObject.completed}\n`;
+                output += `  createdAt: "${taskObject.createdAt}"\n`;
+                output += `  getInfo: function() { ... }\n`;
+                output += `  toggleComplete: function() { ... }\n`;
+                output += `}\n\n`;
+                output += `OBJECT PROPERTIES ACCESS:\n`;
+                output += `• Dot notation: taskObject.title = "${taskObject.title}"\n`;
+                output += `• Bracket notation: taskObject["priority"] = "${taskObject["priority"]}"\n\n`;
+                output += `OBJECT METHODS:\n`;
+                output += `• taskObject.getInfo() = "${taskObject.getInfo()}"\n`;
+                
+                document.getElementById('objectsOutput').textContent = output;
+                
+                // Clear inputs
+                document.getElementById('taskTitle').value = '';
+                document.getElementById('taskPriority').value = 'low';
+            }
+        }
+
+        // ===========================================
+        // 5. CONDITIONAL STATEMENTS
+        // ===========================================
+        
+        function demonstrateConditionals() {
+            const score = parseInt(document.getElementById('scoreInput').value);
+            let grade, message, output;
+            
+            output = `CONDITIONAL STATEMENTS DEMO:\n\n`;
+            output += `Input score: ${score}\n\n`;
+            
+            // IF-ELSE IF-ELSE demonstration
+            if (score >= 90) {
+                grade = 'A';
+                message = 'Excellent work!';
+            } else if (score >= 80) {
+                grade = 'B';
+                message = 'Good job!';
+            } else if (score >= 70) {
+                grade = 'C';
+                message = 'Fair work.';
+            } else if (score >= 60) {
+                grade = 'D';
+                message = 'Needs improvement.';
+            } else if (score >= 0) {
+                grade = 'F';
+                message = 'Please study more.';
+            } else {
+                grade = 'Invalid';
+                message = 'Please enter a valid score (0-100).';
+            }
+            
+            output += `IF-ELSE IF-ELSE RESULT:\n`;
+            output += `Grade: ${grade}\n`;
+            output += `Message: ${message}\n\n`;
+            
+            // Ternary operator demonstration
+            const status = score >= 60 ? 'Passed' : 'Failed';
+            output += `TERNARY OPERATOR:\n`;
+            output += `Status: ${status} (score >= 60 ? 'Passed' : 'Failed')\n\n`;
+            
+            // Switch statement demonstration
+            let category;
+            switch(grade) {
+                case 'A':
+                case 'B':
+                    category = 'Honor Roll';
+                    break;
+                case 'C':
+                    category = 'Average';
+                    break;
+                case 'D':
+                case 'F':
+                    category = 'Needs Help';
+                    break;
+                default:
+                    category = 'Unknown';
+            }
+            
+            output += `SWITCH STATEMENT:\n`;
+            output += `Category: ${category}\n`;
+            
+            document.getElementById('conditionalsOutput').textContent = output;
+        }
+
+        // ===========================================
+        // 6. LOOPS
+        // ===========================================
+        
+        function demonstrateLoops(loopType) {
+            const count = parseInt(document.getElementById('loopCount').value) || 5;
+            let output = `LOOPS DEMO (counting to ${count}):\n\n`;
+            
+            switch(loopType) {
+                case 'for':
+                    output += `FOR LOOP:\n`;
+                    for (let i = 1; i <= count; i++) {
+                        output += `${i} `;
+                    }
+                    output += `\n\nCode: for (let i = 1; i <= ${count}; i++) { ... }\n`;
+                    break;
+                    
+                case 'while':
+                    output += `WHILE LOOP:\n`;
+                    let i = 1;
+                    while (i <= count) {
+                        output += `${i} `;
+                        i++;
+                    }
+                    output += `\n\nCode: while (i <= ${count}) { ... i++; }\n`;
+                    break;
+                    
+                case 'foreach':
+                    output += `FOREACH LOOP (with array):\n`;
+                    const numbers = [];
+                    for (let i = 1; i <= count; i++) {
+                        numbers.push(i);
+                    }
+                    numbers.forEach((num, index) => {
+                        output += `${num} `;
+                    });
+                    output += `\n\nCode: array.forEach((item, index) => { ... })\n`;
+                    break;
+            }
+            
+            document.getElementById('loopsOutput').textContent = output;
+        }
+
+        // ===========================================
+        // 7. DOM MANIPULATION
+        // ===========================================
+        
+        function addTask() {
+            const taskText = document.getElementById('newTask').value.trim();
+            if (taskText) {
+                // Create DOM elements
+                const taskDiv = document.createElement('div');
+                taskDiv.className = 'task-item';
+                
+                const taskContent = document.createElement('span');
+                taskContent.textContent = taskText;
+                
+                const completeBtn = document.createElement('button');
+                completeBtn.textContent = 'Complete';
+                completeBtn.onclick = function() {
+                    taskDiv.classList.toggle('task-completed');
+                    updateStats();
+                };
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.onclick = function() {
+                    taskDiv.remove();
+                    updateStats();
+                };
+                
+                // Append elements
+                taskDiv.appendChild(taskContent);
+                taskDiv.appendChild(completeBtn);
+                taskDiv.appendChild(deleteBtn);
+                
+                document.getElementById('taskList').appendChild(taskDiv);
+                document.getElementById('newTask').value = '';
+                
+                updateStats();
+            }
+        }
+        
+        function clearAllTasks() {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = ''; // Clear all child elements
+            updateStats();
+        }
+        
+        function markAllComplete() {
+            const tasks = document.querySelectorAll('.task-item');
+            tasks.forEach(task => {
+                task.classList.add('task-completed');
+            });
+            updateStats();
+        }
+
+        // ===========================================
+        // 8. EVENT HANDLING
+        // ===========================================
+        
+        function incrementCounter() {
+            clickCounter++;
+            const button = document.getElementById('clickCounter');
+            button.textContent = `Click Me! (${clickCounter} clicks)`;
+            updateStats();
+        }
+        
+        function showMessage() {
+            document.getElementById('hoverMessage').style.display = 'block';
+        }
+        
+        function hideMessage() {
+            document.getElementById('hoverMessage').style.display = 'none';
+        }
+
+        // ===========================================
+        // UTILITY FUNCTIONS
+        // ===========================================
+        
+        function updateStats() {
+            // Update statistics dashboard
+            const allTasks = document.querySelectorAll('.task-item');
+            const completedTasks = document.querySelectorAll('.task-completed');
+            
+            document.getElementById('totalTasks').textContent = allTasks.length;
+            document.getElementById('completedTasks').textContent = completedTasks.length;
+            document.getElementById('clickCount').textContent = clickCounter;
+            document.getElementById('totalHobbies').textContent = hobbies.length;
+        }
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            
+            // Add some sample data for demonstration
+            console.log('JavaScript Basics Project Loaded!');
+            console.log('Open Developer Tools (F12) to see this message and explore!');
+        });
+    </script>
+</body>
+</html>
